@@ -1,5 +1,7 @@
+using System.Globalization;
 using FinancialCalculator.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancialCalculator
@@ -21,6 +23,15 @@ namespace FinancialCalculator
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            var en = new CultureInfo("en-US"); // '.' decimal separator
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(en),
+                SupportedCultures = new List<CultureInfo> { en },
+                SupportedUICultures = new List<CultureInfo> { en }
+            };
+            app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
