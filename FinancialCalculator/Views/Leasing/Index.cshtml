@@ -1,0 +1,162 @@
+﻿@model FinancialCalculator.Models.LeasingCalculator.LeasingCalculatorViewModel
+@using System.Globalization
+@using FinancialCalculator.Models.LeasingCalculator
+
+@{
+    ViewData["Title"] = "Калкулатор за лизинг";
+    var bg = CultureInfo.GetCultureInfo("bg-BG");
+
+    string N2(decimal v) => v.ToString("N2", bg);
+    string P2(decimal v) => v.ToString("N2", bg) + " %";
+}
+
+
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h4 mb-3">Лизингов калкулатор</h1>
+                <p class="text-muted mb-4">
+                    Въведи параметрите (цена, първоначална вноска, срок, месечна вноска, такса за обработка),
+                    и ще сметнем общо платено и оскъпяване.
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Error))
+                {
+                    <div class="alert alert-danger">@Model.Error</div>
+                }
+
+                <form asp-action="Index" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PriceWithVat" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="PriceWithVat" class="form-control" inputmode="decimal" />
+                            <span class="input-group-text">лв.</span>
+                        </div>
+                        <span asp-validation-for="PriceWithVat" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DownPayment" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="DownPayment" class="form-control" inputmode="decimal" />
+                            <span class="input-group-text">лв.</span>
+                        </div>
+                        <span asp-validation-for="DownPayment" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Months" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="Months" class="form-control" inputmode="numeric" />
+                            <span class="input-group-text">мес.</span>
+                        </div>
+                        <span asp-validation-for="Months" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MonthlyPayment" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="MonthlyPayment" class="form-control" inputmode="decimal" />
+                            <span class="input-group-text">лв.</span>
+                        </div>
+                        <span asp-validation-for="MonthlyPayment" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ProcessingFeePercent" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="ProcessingFeePercent" class="form-control" inputmode="decimal" />
+                            <span class="input-group-text">%</span>
+                        </div>
+                        <div class="form-text">Остави празно, ако въвеждаш такса в лева.</div>
+                        <span asp-validation-for="ProcessingFeePercent" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ProcessingFeeAmount" class="form-label"></label>
+                        <div class="input-group">
+                            <input asp-for="ProcessingFeeAmount" class="form-control" inputmode="decimal" />
+                            <span class="input-group-text">лв.</span>
+                        </div>
+                        <div class="form-text">Ако попълниш това, то има приоритет пред процента.</div>
+                        <span asp-validation-for="ProcessingFeeAmount" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="ProcessingFeeBase" class="form-label"></label>
+                        <select asp-for="ProcessingFeeBase" class="form-select"
+                                asp-items="Html.GetEnumSelectList<ProcessingFeeBase>()"></select>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2">
+                        <button class="btn btn-primary" type="submit">Изчисли</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index">Нулирай</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="h5 mb-3">Резултат</h2>
+
+            @if (Model.Result is null)
+            {
+                <p class="text-muted mb-0">Попълни полетата и натисни „Изчисли“.</p>
+            }
+            else
+            {
+                <dl class="row mb-0">
+                    <dt class="col-7">Сума за финансиране</dt>
+                    <dd class="col-5 text-end">@Model.Result.FinancedAmount.ToString("N2") лв.</dd>
+
+                    <dt class="col-7">Такса за обработка</dt>
+                    <dd class="col-5 text-end">@Model.Result.ProcessingFee.ToString("N2") лв.</dd>
+
+                    <dt class="col-7">Общо месечни вноски</dt>
+                    <dd class="col-5 text-end">@Model.Result.TotalInstallments.ToString("N2") лв.</dd>
+
+                    <dt class="col-7 fw-semibold">Общо платено</dt>
+                    <dd class="col-5 text-end fw-semibold">@Model.Result.TotalPaid.ToString("N2") лв.</dd>
+
+                    <dt class="col-7">Оскъпяване</dt>
+                    <dd class="col-5 text-end">@Model.Result.OverpaymentAmount.ToString("N2") лв.</dd>
+
+                    <dt class="col-7">Оскъпяване (%)</dt>
+                    <dd class="col-5 text-end">@Model.Result.OverpaymentPercent.ToString("N2") %</dd>
+                </dl>
+
+                <hr />
+
+                <p class="text-muted mb-2">
+                    *Лихвата долу е „имплицитна“ (изведена от финансирана сума, срок и месечна вноска) и може да се
+                    различава, ако месечната вноска включва други такси/застраховки.
+                </p>
+
+                <dl class="row mb-0">
+                    <dt class="col-7">Имплицитна месечна лихва</dt>
+                    <dd class="col-5 text-end">
+                        @(Model.Result.ImpliedMonthlyRate is null
+                          ? "—"
+                          : (Model.Result.ImpliedMonthlyRate.Value * 100m).ToString("N4") + " %")
+                    </dd>
+
+                    <dt class="col-7">Имплицитна годишна ефективна лихва</dt>
+                    <dd class="col-5 text-end">
+                        @(Model.Result.ImpliedAnnualEffectiveRate is null
+                          ? "—"
+                          : (Model.Result.ImpliedAnnualEffectiveRate.Value * 100m).ToString("N4") + " %")
+                    </dd>
+                </dl>
+            }
+        </div>
+    </div>
+</div>
