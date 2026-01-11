@@ -1,4 +1,3 @@
-/* ===== Unified calculator look (minimal markup changes) ===== */
 
 .calc-page h2,
 .calc-page h1 {
@@ -6,7 +5,6 @@
     margin-bottom: .75rem;
 }
 
-/* Make forms look like cards */
 .calc-form {
     background: #fff;
     border: 1px solid rgba(0,0,0,.12);
@@ -15,7 +13,6 @@
     box-shadow: 0 .25rem .75rem rgba(0,0,0,.06);
 }
 
-/* Results container (table wrapper) looks like card too */
 .calc-result {
     background: #fff;
     border: 1px solid rgba(0,0,0,.12);
@@ -24,12 +21,10 @@
     overflow: hidden;
 }
 
-    /* Remove extra bottom spacing inside table */
     .calc-result .table {
         margin-bottom: 0;
     }
 
-/* Fieldsets look consistent (replaces inline styles) */
 .calc-fieldset {
     border: 1px solid rgba(0,0,0,.12);
     border-radius: 14px;
@@ -44,7 +39,6 @@
         font-size: 1rem;
     }
 
-/* Small polish */
 .calc-page hr {
     opacity: .15;
 }
@@ -52,8 +46,3 @@
 .calc-page .form-text {
     color: #6c757d;
 }
-
-/*.footer {
-    position: static; 
-    padding: 16px 0;
-}*/
