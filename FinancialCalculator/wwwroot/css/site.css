@@ -1,22 +1,54 @@
-html {
-  font-size: 14px;
+/* ===== Unified calculator look (minimal markup changes) ===== */
+
+.calc-page h2,
+.calc-page h1 {
+    font-weight: 700;
+    margin-bottom: .75rem;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Make forms look like cards */
+.calc-form {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 .25rem .75rem rgba(0,0,0,.06);
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Results container (table wrapper) looks like card too */
+.calc-result {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 14px;
+    box-shadow: 0 .25rem .75rem rgba(0,0,0,.06);
+    overflow: hidden;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    /* Remove extra bottom spacing inside table */
+    .calc-result .table {
+        margin-bottom: 0;
+    }
+
+/* Fieldsets look consistent (replaces inline styles) */
+.calc-fieldset {
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 14px;
+    padding: 14px 16px 10px 16px;
 }
 
-body {
-  margin-bottom: 60px;
+    .calc-fieldset legend {
+        float: none;
+        width: auto;
+        padding: 0 .5rem;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+/* Small polish */
+.calc-page hr {
+    opacity: .15;
+}
+
+.calc-page .form-text {
+    color: #6c757d;
 }
