@@ -28,5 +28,4 @@ Leasing calculator
 ![Screenshot_13-1-2026_05621_localhost](https://github.com/user-attachments/assets/8e621996-1fab-430b-8cb3-a67a7f1dc4b7)
 
 
-# Database Diagram:
 
