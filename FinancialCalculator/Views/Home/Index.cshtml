@@ -1,8 +1,77 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="py-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <h1 class="display-5 fw-bold mb-3">FinancialCalculator</h1>
+            <p class="lead text-muted mb-4">
+                Бързи и ясни калкулатори за кредит, лизинг и рефинансиране.
+                Въведи параметри и получи резултат веднага.
+            </p>
+            <div class="mt-4 small text-muted">
+                *Резултатите са ориентировъчни и не представляват финансова консултация.
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="h5 fw-semibold mb-3">Какво можеш да направиш тук?</h2>
+
+                    <div class="d-flex gap-3 mb-3">
+                        <div style="font-size: 26px; line-height: 1;">💳</div>
+                        <div>
+                            <div class="fw-semibold">Кредит</div>
+                            <div class="text-muted">Месечна вноска, общо платено, лихви.</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-3">
+                        <div style="font-size: 26px; line-height: 1;">🚗</div>
+                        <div>
+                            <div class="fw-semibold">Лизинг</div>
+                            <div class="text-muted">Оскъпяване, общи вноски, такси.</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <div style="font-size: 26px; line-height: 1;">🔁</div>
+                        <div>
+                            <div class="fw-semibold">Рефинансиране</div>
+                            <div class="text-muted">Сравнение стар/нов кредит и спестявания.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <div class="fw-semibold mb-1">Бързо</div>
+                    <div class="text-muted">Минимални полета, моментален резултат.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <div class="fw-semibold mb-1">Ясно</div>
+                    <div class="text-muted">Подредени таблици и сравнения.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <div class="fw-semibold mb-1">Удобно</div>
+                    <div class="text-muted">Навигация към всеки калкулатор с 1 клик.</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

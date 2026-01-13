@@ -8,73 +8,79 @@
     string P2(decimal v) => v.ToString("N2", bg) + " %";
 }
 
-<h2 class="mb-3">@ViewData["Title"]</h2>
+<div class="calc-page">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
 
-<form asp-action="Index" method="post" class="mt-3" id="creditForm">
-    @Html.AntiForgeryToken()
+    <form asp-action="Index" method="post" class="mt-3 calc-form" id="creditForm">
+        @Html.AntiForgeryToken()
 
-    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <label asp-for="Principal" class="form-label"></label>
-            <input asp-for="Principal" class="form-control decimal-input" inputmode="decimal" />
-            <span asp-validation-for="Principal" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label asp-for="Principal" class="form-label"></label>
+                <input asp-for="Principal" class="form-control decimal-input" inputmode="decimal" />
+                <span asp-validation-for="Principal" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="AprPercent" class="form-label"></label>
+                <input asp-for="AprPercent" class="form-control decimal-input" inputmode="decimal" />
+                <span asp-validation-for="AprPercent" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="TermMonths" class="form-label"></label>
+                <input asp-for="TermMonths" class="form-control" />
+                <span asp-validation-for="TermMonths" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <label asp-for="AprPercent" class="form-label"></label>
-            <input asp-for="AprPercent" class="form-control decimal-input" inputmode="decimal" />
-            <span asp-validation-for="AprPercent" class="text-danger"></span>
+
+        <button type="submit" class="btn btn-primary">Изчисли</button>
+    </form>
+
+    @if (Model.HasResult)
+    {
+        <hr class="my-4" />
+        <h4 class="mb-3">Резултати</h4>
+
+        <div class="table-responsive calc-result">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:60%">Показател</th>
+                        <th style="width:40%">Стойност</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Главница</td>
+                        <td>@N2(Model.Principal)</td>
+                    </tr>
+                    <tr>
+                        <td>Годишна лихва</td>
+                        <td>@P2(Model.AprPercent)</td>
+                    </tr>
+                    <tr>
+                        <td>Срок (месеци)</td>
+                        <td>@Model.TermMonths</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Месечна вноска</strong></td>
+                        <td><strong>@N2(Model.MonthlyPayment)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Общо платена сума</td>
+                        <td>@N2(Model.TotalPaid)</td>
+                    </tr>
+                    <tr>
+                        <td>Общо лихви</td>
+                        <td>@N2(Model.TotalInterest)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-md-4 mb-3">
-            <label asp-for="TermMonths" class="form-label"></label>
-            <input asp-for="TermMonths" class="form-control" />
-            <span asp-validation-for="TermMonths" class="text-danger"></span>
-        </div>
-    </div>
+    }
+</div>
 
-    <button type="submit" class="btn btn-primary">Изчисли</button>
-</form>
-
-@if (Model.HasResult)
-{
-    <hr class="my-4" />
-    <h4 class="mb-3">Резултати</h4>
-
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th style="width:60%">Показател</th>
-                    <th style="width:40%">Стойност</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Главница</td>
-                    <td>@N2(Model.Principal)</td>
-                </tr>
-                <tr>
-                    <td>Годишна лихва</td>
-                    <td>@P2(Model.AprPercent)</td>
-                </tr>
-                <tr>
-                    <td>Срок (месеци)</td>
-                    <td>@Model.TermMonths</td>
-                </tr>
-                <tr>
-                    <td><strong>Месечна вноска</strong></td>
-                    <td><strong>@N2(Model.MonthlyPayment)</strong></td>
-                </tr>
-                <tr>
-                    <td>Общо платена сума</td>
-                    <td>@N2(Model.TotalPaid)</td>
-                </tr>
-                <tr>
-                    <td>Общо лихви</td>
-                    <td>@N2(Model.TotalInterest)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
